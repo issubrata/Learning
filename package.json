@@ -1,0 +1,15 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "Simple URL shortener service",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "sequelize": "^6.37.1",
+    "pg": "^8.11.5",
+    "pg-hstore": "^2.3.4"
+  }
+}
