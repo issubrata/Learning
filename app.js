@@ -2,9 +2,42 @@
 const express = require('./express');
 const Url = require('./models/url');
 const { sequelize } = require('./models');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 app.use(express.json());
+
+// serve the dashboard
+app.get('/', (req, res) => {
+  const file = path.join(__dirname, 'public', 'index.html');
+  fs.readFile(file, (err, data) => {
+    if (err) {
+      res.statusCode = 500;
+      return res.end('Server error');
+    }
+    res.setHeader('Content-Type', 'text/html');
+    res.end(data);
+  });
+});
+
+app.get('/public/:file', (req, res) => {
+  const filePath = path.join(__dirname, 'public', req.params.file);
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      res.statusCode = 404;
+      return res.end('Not Found');
+    }
+    if (filePath.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    } else if (filePath.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    } else {
+      res.setHeader('Content-Type', 'text/plain');
+    }
+    res.end(data);
+  });
+});
 
 function generateAlias(length = 6) {
   const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
