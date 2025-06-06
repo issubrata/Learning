@@ -1,3 +1,1 @@
-# VCGdiscord
-VCGamers Discord
-Test Discord
+Testing
